@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "";
+}
+
+<h2>Test</h2>
+
+<div>
+    <table>
+        <tr>
+            <th>
+                Siglo
+            </th>
+            <td>
+                <input id="txtsiglo" type="text" placeholder="Siglo"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td> <input id="txtNombre" type="text" placeholder="Nombre"/> </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="button" value="Alta Constelación" id="btngrabar" class="myButton" />
+                <input type="button" value="Listar Constelación" id="btnlistar" class="myButton" />
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <h3>Listado de Constelaciones</h3>
+    </p>
+    <div id="divBody">No hay registros</div>
+</div>
+
+@section scripts
+{
+
+    <script>
+
+        var cosmos = new Array();
+
+        function Cosmos() {
+            this.setsiglo = function (value) { this._siglo = value; }
+            this.getsiglo = function () { return this._siglo };
+
+            this.setNombre = function (value) { this._nombre = value; }
+            this.getNombre = function () { return this._nombre };
+        }
+
+        $("#btngrabar").click(function () {
+
+            if ($("#txtsiglo").val() == "")
+                alert("Debe ingresar un Siglo");
+
+            let cosmo = new Cosmos();
+            cosmo.setsiglo($("#txtsiglo").val());
+            cosmo.setNombre($("#txtNombre").val());
+            cosmos.push(cosmo);
+
+            $("#txtsiglo").val("");
+            $("#txtNombre").val("");
+
+        });
+
+        $("#btnlistar").click(function () {
+
+            var elem = $("#divBody");
+            elem.html("");
+
+            $.each(cosmos, function (i, e) {
+                elem.append("<span>" + e.getsiglo() + " - " + e.getNombre() + "</span> <br />")
+            });
+
+        });
+
+    </script>
+
+}
